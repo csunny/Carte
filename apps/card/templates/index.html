@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap-slider.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.colorpickersliders.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrapValidator.css' %}"/>
+{% endblock %}
+
+{% block sm_screen %}
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#app">名片查询</a></li>
+            <li><a href="#bbs">使用说明</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block upload_section %}
+<section id="app">
+    <div class="container">
+      <div class="col-md-12">
+          <h2>名片查询</h2>
+          <div class="input-group">
+              <input type="text" class="form-control" id="name_p" placeholder="请输入姓名/电话号码">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button" id="query">查询</button>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#choose_file">
+                    <span class="glyphicon glyphicon-certificate"></span>
+                        添加
+                </button>
+              </span>
+          </div>
+
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+
+</section>
+{% endblock %}
+
+{% block card %}
+<section id="carte">
+    <div class="container hide">
+        <div class="row wow fadeInUp" data-wow-duration="0.5s">
+            <div class="col-md-4">
+                <span>
+                    <img src="/static/img/nebulas.png" class="img-responsive" alt=""/>
+                     <h3>名片</h3>
+                    <p id="card_hide" class="hide">{{card_model.name}}</p>
+                    <p id="cname_p">姓名: {{card_model.name}}</p>
+                    <p id="company_p">公司: {{card_model.company}}</p>
+                    <p id="cposition_p">职位: {{card_model.position}}</p>
+                    <p id="csex_p">性别: {{card_model.sex}}</p>
+                    <p id="cbir_p">出生年月: {{card_model.birthday}}</p>
+                    <p id="cphone_p">电话号码: {{card_model.phone}}</p>
+                    <p id="cmail_p">邮箱: {{card_model.email}}</p>
+                    <a href="{{card_model.website}}" target="_blank" id="cweb_p">网站: {{card_model.website}}</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block notice %}
+<section id="notice">
+     <div class="container hide">
+        <div class="row wow fadeInUp" data-wow-duration="0.5s">
+            <div class="col-md-4">
+                <h3>没有查到结果！</h3>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+{% block modal %}
+<div class="modal fade" id="choose_file" tabindex="-1" aria-labelledby="chose_fileLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">信息填写</h4>
+            </div>
+            <div class="modal-body">
+                    <!-- To use feedback icons, ensure that you use Bootstrap v3.1.0 or later -->
+                <form id="registrationForm" method="post" class="form-horizontal"
+                    data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                    data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">姓名</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="name"
+                                data-bv-notempty="true"
+                                data-bv-notempty-message="The username is required and cannot be empty"
+                                required
+                                data-bv-stringlength="true"
+                                data-bv-stringlength-min="6"
+                                data-bv-stringlength-max="30"
+                                data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+
+                                data-bv-regexp="true"
+                                data-bv-regexp-regexp="^[a-zA-Z0-9]+$"
+                                data-bv-regexp-message="The username can only consist of alphabetical and number"
+
+                                data-bv-different="true"
+                                data-bv-different-field="password"
+                                data-bv-different-message="The username and password cannot be the same as each other" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">邮箱</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="email"
+                                data-bv-notempty="true"
+                                data-bv-notempty-message="The email address is required and cannot be empty"
+                                required
+                                data-bv-emailaddress="true"
+                                data-bv-emailaddress-message="The email address is not a valid" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">职位</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="position"
+                                data-bv-notempty="true"
+                                required
+                                data-bv-notempty-message="The position address is required and cannot be empty"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">公司</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="company"
+                                data-bv-notempty="true"
+                                required
+                                data-bv-notempty-message="The company address is required and cannot be empty"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">网站</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="website"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">电话号码</label>
+                        <div class="col-sm-5">
+                            <input type="number" class="form-control" name="phone"
+                                data-bv-notempty="true"
+                                data-bv-notempty-message="The phone is required and cannot be empty"
+
+                                data-bv-stringlength="true"
+                                data-bv-stringlength-min="11"
+                                data-bv-stringlength-max="12"
+                                data-bv-stringlength-message="The phone must have at least 11 characters"
+                                required
+                                data-bv-different="true"
+                                data-bv-different-field="username"
+                                data-bv-different-message="The password cannot be the same as username" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">性别</label>
+                        <div class="col-sm-5">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="sex" value="male"
+                                        required
+                                        data-bv-notempty="true"
+                                        data-bv-notempty-message="The gender is required" /> 男
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="sex" value="female" /> 女
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="sex" value="other" /> 其他
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">出生年月</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="birthday" placeholder="YYYY/MM/DD"
+                                data-bv-notempty="true"
+                                data-bv-notempty-message="The date of birth is required"
+                                required
+                                data-bv-date="true"
+                                data-bv-date-format="YYYY/MM/DD"
+                                data-bv-date-message="The date of birth is not valid" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endblock %}
+
+{% block explain %}
+<section id="bbs">
+    <div class="container">
+        <div class="row wow fadeInUp" data-wow-duration="0.5s">
+            <div class="col-md-4">
+                <a href="https://github.com/csunny/wiki" target="_blank">
+                    <img src="/static/img/nebulas.png" class="img-responsive" alt=""/>
+                    <h3>插件安装</h3>
+                    <p>安装星云链chrome插件钱包。</p>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="https://github.com/csunny/wiki" target="_blank">
+                    <img src="/static/img/wallet.png" class="img-responsive" alt=""/>
+                    <h3>钱包创建</h3>
+                    <p>通过chrome插件创建自己的钱包。</p>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="https://github.com/csunny/wiki" target="_blank">
+                    <img src="/static/img/upload.png" class="img-responsive" alt=""/>
+                    <h3>搜索名片</h3>
+                    <p>请在上方输入框中根据姓名或者电话号码搜索名片。</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block custom_js %}
+<script src="{% static 'js/canvas-to-blob.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-slider.min.js' %}"></script>
+<script src="{% static 'js/plupload.full.min.js' %}"></script>
+<script src="{% static 'js/tinycolor-min.js'%}"></script>
+<script src="{% static 'js/bootstrapValidator.js' %}"></script>
+<script src="{% static 'js/upload.js' %}"></script>
+{% endblock %}
+
