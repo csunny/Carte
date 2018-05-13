@@ -42,7 +42,10 @@ def save(request):
         card_model.phone = info['phone']
         card_model.sex = info['sex']
         card_model.birthday = info['birthday']
-        card_model.save()
+        try:
+            card_model.save()
+        except Exception as e:
+            django_log.error(e)
 
         rsp_data.update(**info)
 
