@@ -31,8 +31,8 @@ var WebDomain = "http://www.oceanpp.com"
 var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
 var nebPay = new NebPay();
 
-var dappAddress = "n1tTJ6u4UyPH1eTvv7RRuCzbFnamgXbUSEU"    // 06bc2147dd1062efade9aa9e56b11cfe4e988098ceba0b37b1be6b4d8ec17cad
-//var dappAddress = "n22WTwSxmMq98CYCKxMae9TWzvdoyo6LZmW";    // 智能合约的地址 测试网络  hash="782c250dceeb62767678a2d755c42fc0bc920d6e6f4296a527b8a8f67bc7942a"
+// var dappAddress = "n1tTJ6u4UyPH1eTvv7RRuCzbFnamgXbUSEU"    // 06bc2147dd1062efade9aa9e56b11cfe4e988098ceba0b37b1be6b4d8ec17cad
+var dappAddress = "n21Xp49DEGC1UF7r6Z6reVah4XzhxzmzN2t";    // 智能合约的地址 hash="8f750aa6c75a6bbbc38fcf42a2ead20d75e87ba5390199f4f0e8e26ddd42c02a"
 // var dappAddress = "n1m1bgxfgzcuo3TERGzkEe9ohUywS1DwHmY"   // 智能合约地址 主网 hash 353b7067f1f4d0a08011a83e5ac436b523e5bea7707c0f21a00066b2445da6bd
 
 function contract(key, val){
